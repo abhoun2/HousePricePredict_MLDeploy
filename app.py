@@ -11,15 +11,14 @@ def home():
 
 @app.route('/predict',methods=['POST'])
 def predict():
-    '''
-    For rendering results on HTML GUI
-    '''
+    #render result to html
     int_features = [float(x) for x in request.form.values()]
     print('hello')
     condition = int_features[0] #condition = bedroom
     yr_built = int_features[4]
     int_features.append(condition);
     print('int features =',int_features)
+    #trying to put condition to year built to avoid exception.
     if yr_built < 1900:
         yr_built = 1900
     if yr_built >2015:
@@ -33,9 +32,8 @@ def predict():
 
 @app.route('/predict_api',methods=['POST'])
 def predict_api():
-    '''
-    For direct API calls through request
-    '''
+    
+#Direct api call through request
     data = request.get_json(force=True)
     prediction = model.predict([np.array(list(data.values()))])
 
@@ -44,3 +42,4 @@ def predict_api():
 
 if __name__ == "__main__":
     app.run(debug=True)
+
